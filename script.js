@@ -1,5 +1,5 @@
-// CONFIGURAÇÃO: Insira o número do WhatsApp com DDI 55 + DDD + número
-const WHATSAPP_LOJA = "5551999999999";
+// WhatsApp configurado: 55 + 51 + 99887726
+const WHATSAPP_LOJA = "555199887726";
 
 // Valor da Caipirinha com Picolé (ajuste se necessário)
 const PRECO_CAIPIRINHA = 22.00;
@@ -106,41 +106,29 @@ function toggleCartModal() {
   modal.classList.toggle("hidden");
 }
 
-function toggleEndereco() {
-  const tipo = document.getElementById("tipo-entrega").value;
-  const campoEndereco = document.getElementById("cliente-endereco");
-  if (tipo.includes("Delivery")) {
-    campoEndereco.classList.remove("hidden");
-  } else {
-    campoEndereco.classList.add("hidden");
-  }
-}
-
 function enviarWhatsApp() {
   if (carrinho.length === 0) return;
 
   const nome = document.getElementById("cliente-nome").value.trim();
-  const tipoEntrega = document.getElementById("tipo-entrega").value;
-  const endereco = document.getElementById("cliente-endereco").value.trim();
+  const apartamento = document.getElementById("cliente-apartamento").value.trim();
+  const torre = document.getElementById("cliente-torre").value.trim();
   const pagamento = document.getElementById("forma-pagamento").value;
 
   if (!nome) {
-    alert("Por favor, informe seu nome para enviar o pedido.");
+    alert("Por favor, informe seu nome.");
     return;
   }
 
-  if (tipoEntrega.includes("Delivery") && !endereco) {
-    alert("Por favor, informe o endereço para entrega.");
+  if (!apartamento || !torre) {
+    alert("Por favor, informe o apartamento e a torre.");
     return;
   }
 
   let texto = `*🍹 NOVO PEDIDO - COPÃO DO VIZINHO*\n\n`;
-  texto += `*Cliente:* ${nome}\n`;
-  texto += `*Modalidade:* ${tipoEntrega}\n`;
-  if (tipoEntrega.includes("Delivery")) {
-    texto += `*Endereço:* ${endereco}\n`;
-  }
-  texto += `*Pagamento:* ${pagamento}\n\n`;
+  texto += `*Nome:* ${nome}\n`;
+  texto += `*Apartamento:* ${apartamento}\n`;
+  texto += `*Torre:* ${torre}\n`;
+  texto += `*Forma de pagamento:* ${pagamento}\n\n`;
   texto += `*📋 ITENS DO PEDIDO:*\n`;
 
   let total = 0;
