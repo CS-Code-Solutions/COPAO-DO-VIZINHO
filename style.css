@@ -58,11 +58,6 @@ body {
   max-width: 140px;
   object-fit: contain;
   display: block;
-  border-radius: 0;
-  background: none;
-  border: none;
-  padding: 0;
-  box-shadow: none;
 }
 
 .brand-text {
@@ -161,8 +156,117 @@ body {
   padding: 4px 10px;
   border-radius: 8px;
   backdrop-filter: blur(4px);
+  z-index: 3;
 }
 
+/* ==========================================
+   ADESIVOS FLUTUANTES NA FRENTE DOS COPOS
+   ========================================== */
+@keyframes floatSticker {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(-5deg) translateY(0px);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(-3deg) translateY(-5px);
+  }
+}
+
+.sticker-overlay {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  pointer-events: none;
+  z-index: 2;
+  animation: floatSticker 3.2s ease-in-out infinite;
+}
+
+/* 1. Sticker Capeta */
+.sticker-capeta {
+  width: 66%;
+  max-width: 215px;
+}
+
+.sticker-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 2. Sticker Caipirinha com Picolé */
+.sticker-caipi {
+  top: 58%;
+}
+
+.sticker-caipi-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.sticker-caipi-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.75rem;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow:
+    -2px -2px 0 #140a0a,
+     2px -2px 0 #140a0a,
+    -2px  2px 0 #140a0a,
+     2px  2px 0 #140a0a,
+     0   5px 12px rgba(0, 0, 0, 0.85);
+}
+
+.sticker-caipi-badge {
+  margin-top: 2px;
+  background: var(--accent-yellow);
+  color: #1a0b0b;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 2px solid #140a0a;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+}
+
+/* 3. Sticker Red Label + Energético */
+.sticker-red {
+  top: 58%;
+}
+
+.sticker-red-box {
+  background: rgba(110, 12, 16, 0.92);
+  border: 2px solid var(--accent-yellow);
+  border-radius: 10px;
+  padding: 5px 14px;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(2px);
+}
+
+.sticker-red-top {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.05rem;
+  color: #ffffff;
+  letter-spacing: 0.6px;
+  line-height: 1.1;
+}
+
+.sticker-red-sub {
+  display: block;
+  font-family: 'Pacifico', cursive;
+  font-size: 0.95rem;
+  color: var(--accent-yellow);
+  line-height: 1.15;
+}
+
+/* Corpo do Card */
 .card-body {
   padding: 16px;
   display: flex;
