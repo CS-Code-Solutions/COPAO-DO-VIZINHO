@@ -3,7 +3,7 @@
   --card-bg: #1a1212;
   --border-glow: rgba(255, 59, 48, 0.35);
   --primary-red: #e51c23;
-  --accent-yellow: #ffcb05; /* Amarelo vibrante para preços e destaques */
+  --accent-yellow: #ffcb05;
   --text-light: #ffffff;
   --text-muted: #c7bdbd;
   --whatsapp: #25d366;
@@ -13,7 +13,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /* Preservar a trava de seleção original */
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -21,23 +20,289 @@
   -webkit-touch-callout: none;
 }
 
-/* Garantir que as imagens de fundo nos cards ocupem o espaço corretamente */
+/* Mantém seleção habilitada nos campos de preenchimento do pedido */
+input,
+select,
+textarea {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #290b0b 0%, var(--bg-dark) 60%);
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  min-height: 100vh;
+  padding-bottom: 140px;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Cabeçalho com Logo grande e efeito LED ao passar o mouse/dedo */
+.topbar {
+  padding: 24px 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 24px;
+}
+
+.topbar-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.logo-led-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.3s ease;
+}
+
+.site-logo {
+  height: 168px;
+  width: auto;
+  max-width: min(310px, 100%);
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.75));
+  transition: transform 0.3s ease, filter 0.35s ease;
+}
+
+.logo-led-wrapper:hover .site-logo,
+.logo-led-wrapper:active .site-logo,
+.logo-led-wrapper:focus .site-logo {
+  transform: scale(1.05);
+  filter:
+    drop-shadow(0 0 8px rgba(255, 30, 39, 0.95))
+    drop-shadow(0 0 18px rgba(255, 203, 5, 0.85))
+    drop-shadow(0 0 32px rgba(255, 30, 39, 0.75));
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Grid de Produtos */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.product-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-glow);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 0;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(229, 28, 35, 0.28);
+}
+
+/* Enquadramento quadrado sem cortar nenhuma arte */
 .card-image-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1; /* Mantém o quadrado */
+  aspect-ratio: 1 / 1;
+  max-height: 360px;
   overflow: hidden;
-  background-color: #090505; /* Cor de fundo caso a imagem demore a carregar */
+  background: radial-gradient(circle at center, #1e0b0b 0%, #090505 100%);
+}
+
+.card-image-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: transparent;
 }
 
 .card-image-wrapper img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Ajusta a imagem para caber inteira sem cortar */
+  max-width: 100%;
+  object-fit: contain;
   object-position: center;
+  display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  transition: transform 0.3s ease;
 }
 
-/* Estilização dos selects e inputs dos novos cards */
+.product-card:hover .card-image-wrapper img {
+  transform: scale(1.03);
+}
+
+.tag-destaque {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(15, 10, 10, 0.9);
+  border: 1px solid var(--accent-yellow);
+  color: var(--accent-yellow);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+  z-index: 3;
+}
+
+/* ==========================================
+   ADESIVOS FLUTUANTES NO CANTO SUPERIOR DIREITO
+   ========================================== */
+@keyframes floatCorner {
+  0%, 100% {
+    transform: rotate(4deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(6deg) translateY(-4px);
+  }
+}
+
+.sticker-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  pointer-events: none;
+  z-index: 3;
+  animation: floatCorner 3.2s ease-in-out infinite;
+}
+
+.sticker-capeta {
+  width: 122px;
+}
+
+.sticker-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.sticker-caipi-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: rgba(18, 10, 10, 0.85);
+  border: 1.5px solid var(--accent-yellow);
+  border-radius: 10px;
+  padding: 4px 9px;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.85);
+}
+
+.sticker-caipi-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.05rem;
+  color: #ffffff;
+  line-height: 1.05;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.sticker-caipi-badge {
+  margin-top: 2px;
+  background: var(--accent-yellow);
+  color: #1a0b0b;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 0.56rem;
+  letter-spacing: 0.4px;
+  padding: 2px 6px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.sticker-red-box {
+  background: rgba(18, 10, 10, 0.9);
+  border: 1.5px solid var(--accent-yellow);
+  border-radius: 8px;
+  padding: 4px 9px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.85);
+}
+
+.sticker-red-top {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 0.7rem;
+  color: var(--accent-yellow);
+  line-height: 1.1;
+}
+
+.sticker-red-sub {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.64rem;
+  color: #ffffff;
+  line-height: 1.15;
+}
+
+/* Corpo do Card */
+.card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+}
+
+.card-body h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.desc {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.38;
+}
+
+/* Seletores */
+.selectors {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.selectors label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  gap: 3px;
+}
+
 .selectors select,
 .checkout-fields input,
 .checkout-fields select {
@@ -58,16 +323,69 @@
   border-color: var(--accent-yellow);
 }
 
-.selectors label {
-  display: flex;
-  flex-direction: column;
-  font-size: 0.76rem;
-  color: var(--text-muted);
-  gap: 3px;
-  margin-bottom: 6px;
+.unit-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-/* Estilização do botão Adicionar */
+/* Botões de Tamanho */
+.size-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.size-btn,
+.energetico-size-btn,
+.caipi-frutas-size-btn {
+  background: #261a1a;
+  color: var(--text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 8px 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.78rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.size-btn strong,
+.energetico-size-btn strong,
+.caipi-frutas-size-btn strong {
+  color: #fff;
+  font-size: 0.88rem;
+  margin-top: 2px;
+}
+
+.size-btn.active,
+.energetico-size-btn.active,
+.caipi-frutas-size-btn.active {
+  background: rgba(229, 28, 35, 0.24);
+  border-color: var(--accent-yellow);
+  color: #fff;
+}
+
+.size-btn.active strong,
+.energetico-size-btn.active strong,
+.caipi-frutas-size-btn.active strong {
+  color: var(--accent-yellow);
+}
+
+/* Rodapé do Card */
+.price-row {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .price {
   font-family: 'Montserrat', sans-serif;
   font-size: 1.25rem;
@@ -93,4 +411,217 @@
 
 .btn-add:active {
   transform: scale(0.96);
+}
+
+/* Botão Flutuante do Carrinho */
+.floating-cart-btn {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 440px;
+  background: linear-gradient(135deg, var(--accent-yellow), #f5a623);
+  color: #140c0c;
+  border: 2px solid rgba(20, 12, 12, 0.2);
+  border-radius: 14px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 0.92rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  z-index: 900;
+}
+
+@media (min-width: 900px) {
+  .floating-cart-btn {
+    left: auto;
+    right: 24px;
+    transform: none;
+    width: auto;
+    min-width: 310px;
+  }
+}
+
+.cart-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.floating-cart-btn #cart-count {
+  background: #140c0c;
+  color: var(--accent-yellow);
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+}
+
+/* Card / Modal Flutuante */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+@media (min-width: 600px) {
+  .modal-backdrop {
+    align-items: center;
+  }
+}
+
+.modal-card {
+  background: #1b1212;
+  border: 1px solid var(--border-glow);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 460px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.cart-items {
+  padding: 14px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 210px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #261a1a;
+  padding: 10px 12px;
+  border-radius: 12px;
+  gap: 10px;
+}
+
+.cart-item-info h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.cart-item-info span {
+  font-size: 0.8rem;
+  color: var(--accent-yellow);
+  font-weight: 700;
+}
+
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qty-controls button {
+  background: #382525;
+  color: #fff;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.checkout-fields {
+  padding: 12px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-footer {
+  padding: 16px 20px;
+  background: #140d0d;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.total-line strong {
+  color: var(--accent-yellow);
+  font-size: 1.25rem;
+}
+
+.btn-whatsapp {
+  width: 100%;
+  background: var(--whatsapp);
+  color: #0b2413;
+  border: none;
+  padding: 13px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.96rem;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.btn-whatsapp:hover {
+  filter: brightness(1.08);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Rodapé */
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.footer a {
+  color: var(--accent-yellow);
+  text-decoration: none;
+  font-weight: 600;
 }
