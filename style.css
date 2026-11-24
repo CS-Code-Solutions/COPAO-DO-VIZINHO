@@ -1,0 +1,454 @@
+:root {
+  --bg-dark: #0f0a0a;
+  --card-bg: #1a1212;
+  --border-glow: rgba(255, 59, 48, 0.35);
+  --primary-red: #e51c23;
+  --accent-yellow: #ffcb05;
+  --text-light: #ffffff;
+  --text-muted: #c7bdbd;
+  --whatsapp: #25d366;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #290b0b 0%, var(--bg-dark) 60%);
+  color: var(--text-light);
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Header */
+.topbar {
+  text-align: center;
+  padding: 28px 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 28px;
+}
+
+.brand-badge {
+  display: inline-block;
+  background: rgba(255, 203, 5, 0.15);
+  color: var(--accent-yellow);
+  border: 1px solid rgba(255, 203, 5, 0.4);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.topbar h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.topbar h1 span {
+  color: var(--accent-yellow);
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  margin-top: 4px;
+}
+
+/* Grid de Produtos */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.product-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-glow);
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 36px rgba(229, 28, 35, 0.3);
+}
+
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #000;
+}
+
+.card-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.product-card:hover .card-image-wrapper img {
+  transform: scale(1.04);
+}
+
+.tag-destaque {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(15, 10, 10, 0.85);
+  border: 1px solid var(--accent-yellow);
+  color: var(--accent-yellow);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+}
+
+.card-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card-body h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.desc {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+
+/* Seletores Caipirinha */
+.selectors {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.selectors label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  gap: 4px;
+}
+
+.selectors select,
+.checkout-fields input,
+.checkout-fields select {
+  background: #261a1a;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.selectors select:focus,
+.checkout-fields input:focus,
+.checkout-fields select:focus {
+  border-color: var(--accent-yellow);
+}
+
+/* Tamanhos Red Label */
+.size-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.size-btn {
+  background: #261a1a;
+  color: var(--text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.size-btn strong {
+  color: #fff;
+  font-size: 0.9rem;
+  margin-top: 2px;
+}
+
+.size-btn.active {
+  background: rgba(229, 28, 35, 0.22);
+  border-color: var(--accent-yellow);
+  color: #fff;
+}
+
+.size-btn.active strong {
+  color: var(--accent-yellow);
+}
+
+/* Rodapé do Card */
+.price-row {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.price {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--accent-yellow);
+}
+
+.btn-add {
+  background: linear-gradient(135deg, #ff2a2a, #b80d14);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.2s ease;
+}
+
+.btn-add:hover {
+  filter: brightness(1.12);
+}
+
+.btn-add:active {
+  transform: scale(0.96);
+}
+
+/* Botão Flutuante do Carrinho */
+.floating-cart-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 460px;
+  background: linear-gradient(135deg, var(--accent-yellow), #f5a623);
+  color: #140c0c;
+  border: none;
+  border-radius: 16px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 0.95rem;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+  z-index: 900;
+}
+
+.floating-cart-btn #cart-count {
+  background: #140c0c;
+  color: var(--accent-yellow);
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+/* Modal Flutuante */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+@media (min-width: 600px) {
+  .modal-backdrop {
+    align-items: center;
+  }
+}
+
+.modal-card {
+  background: #1b1212;
+  border: 1px solid var(--border-glow);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 460px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.cart-items {
+  padding: 16px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 240px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #261a1a;
+  padding: 10px 12px;
+  border-radius: 12px;
+  gap: 10px;
+}
+
+.cart-item-info h4 {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.cart-item-info span {
+  font-size: 0.82rem;
+  color: var(--accent-yellow);
+  font-weight: 700;
+}
+
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qty-controls button {
+  background: #382525;
+  color: #fff;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.checkout-fields {
+  padding: 12px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-footer {
+  padding: 16px 20px;
+  background: #140d0d;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.total-line strong {
+  color: var(--accent-yellow);
+  font-size: 1.3rem;
+}
+
+.btn-whatsapp {
+  width: 100%;
+  background: var(--whatsapp);
+  color: #0b2413;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.btn-whatsapp:hover {
+  filter: brightness(1.08);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Rodapé */
+.footer {
+  text-align: center;
+  margin-top: 48px;
+  padding: 20px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.footer a {
+  color: var(--accent-yellow);
+  text-decoration: none;
+  font-weight: 600;
+}
