@@ -1,0 +1,160 @@
+// CONFIGURAÇÃO: Coloque aqui o WhatsApp do Copão do Vizinho (com DDI 55 + DDD)
+const WHATSAPP_LOJA = "5551999999999";
+
+// Preço padrão da Caipirinha com Picolé (ajuste conforme o valor cobrado)
+const PRECO_CAIPIRINHA = 22.00;
+
+let carrinho = JSON.parse(localStorage.getItem("copao_vizinho_cart")) || [];
+let redLabelSelecionado = { tamanho: "550 ml", preco: 19.90 };
+
+function formatarMoeda(valor) {
+  return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+
+function salvarCarrinho() {
+  localStorage.setItem("copao_vizinho_cart", JSON.stringify(carrinho));
+  atualizarInterface();
+}
+
+function adicionarAoCarrinho(nome, preco) {
+  const existente = carrinho.find((item) => item.nome === nome);
+  if (existente) {
+    existente.qtd += 1;
+  } else {
+    carrinho.push({ nome, preco, qtd: 1 });
+  }
+  salvarCarrinho();
+}
+
+function adicionarDireto(nome, preco) {
+  adicionarAoCarrinho(nome, preco);
+}
+
+function adicionarCaipirinha() {
+  const sabor = document.getElementById("caipi-sabor").value;
+  const destilado = document.getElementById("caipi-destilado").value;
+  const nomeCompleto = `Caipirinha c/ Picolé (${sabor} + ${destilado})`;
+  adicionarAoCarrinho(nomeCompleto, PRECO_CAIPIRINHA);
+}
+
+function selecionarTamanho(botao) {
+  document.querySelectorAll(".size-btn").forEach((btn) => btn.classList.remove("active"));
+  botao.classList.add("active");
+
+  const tamanho = botao.getAttribute("data-size");
+  const preco = parseFloat(botao.getAttribute("data-price"));
+  redLabelSelecionado = { tamanho, preco };
+
+  document.getElementById("red-price-display").textContent = formatarMoeda(preco);
+}
+
+function adicionarRedLabel() {
+  const nomeCompleto = `Red Label + Energético (${redLabelSelecionado.tamanho})`;
+  adicionarAoCarrinho(nomeCompleto, redLabelSelecionado.preco);
+}
+
+function alterarQuantidade(index, delta) {
+  carrinho[index].qtd += delta;
+  if (carrinho[index].qtd <= 0) {
+    carrinho.splice(index, 1);
+  }
+  salvarCarrinho();
+}
+
+function atualizarInterface() {
+  const floatingBtn = document.getElementById("floating-cart-btn");
+  const cartCount = document.getElementById("cart-count");
+  const floatingTotal = document.getElementById("cart-floating-total");
+  const modalTotal = document.getElementById("modal-total");
+  const cartItemsContainer = document.getElementById("cart-items");
+
+  const totalItens = carrinho.reduce((acc, item) => acc + item.qtd, 0);
+  const valorTotal = carrinho.reduce((acc, item) => acc + item.preco * item.qtd, 0);
+
+  if (totalItens === 0) {
+    floatingBtn.classList.add("hidden");
+    document.getElementById("cart-modal").classList.add("hidden");
+    return;
+  }
+
+  floatingBtn.classList.remove("hidden");
+  cartCount.textContent = totalItens;
+  floatingTotal.textContent = formatarMoeda(valorTotal);
+  modalTotal.textContent = formatarMoeda(valorTotal);
+
+  cartItemsContainer.innerHTML = carrinho
+    .map(
+      (item, index) => `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <h4>${item.nome}</h4>
+          <span>${formatarMoeda(item.preco * item.qtd)}</span>
+        </div>
+        <div class="qty-controls">
+          <button onclick="alterarQuantidade(${index}, -1)">-</button>
+          <span>${item.qtd}</span>
+          <button onclick="alterarQuantidade(${index}, 1)">+</button>
+        </div>
+      </div>
+    `
+    )
+    .join("");
+}
+
+function toggleCartModal() {
+  const modal = document.getElementById("cart-modal");
+  modal.classList.toggle("hidden");
+}
+
+function toggleEndereco() {
+  const tipo = document.getElementById("tipo-entrega").value;
+  const campoEndereco = document.getElementById("cliente-endereco");
+  if (tipo.includes("Delivery")) {
+    campoEndereco.classList.remove("hidden");
+  } else {
+    campoEndereco.classList.add("hidden");
+  }
+}
+
+function enviarWhatsApp() {
+  if (carrinho.length === 0) return;
+
+  const nome = document.getElementById("cliente-nome").value.trim();
+  const tipoEntrega = document.getElementById("tipo-entrega").value;
+  const endereco = document.getElementById("cliente-endereco").value.trim();
+  const pagamento = document.getElementById("forma-pagamento").value;
+
+  if (!nome) {
+    alert("Por favor, informe seu nome para o pedido.");
+    return;
+  }
+
+  if (tipoEntrega.includes("Delivery") && !endereco) {
+    alert("Por favor, informe o endereço para entrega.");
+    return;
+  }
+
+  let texto = `*🍹 NOVO PEDIDO - COPÃO DO VIZINHO*\n\n`;
+  texto += `*Cliente:* ${nome}\n`;
+  texto += `*Modalidade:* ${tipoEntrega}\n`;
+  if (tipoEntrega.includes("Delivery")) {
+    texto += `*Endereço:* ${endereco}\n`;
+  }
+  texto += `*Pagamento:* ${pagamento}\n\n`;
+  texto += `*📋 ITENS DO PEDIDO:*\n`;
+
+  let total = 0;
+  carrinho.forEach((item) => {
+    const subtotal = item.preco * item.qtd;
+    total += subtotal;
+    texto += `• ${item.qtd}x ${item.nome} — ${formatarMoeda(subtotal)}\n`;
+  });
+
+  texto += `\n*💰 TOTAL: ${formatarMoeda(total)}*`;
+
+  const url = `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(texto)}`;
+  window.open(url, "_blank");
+}
+
+// Inicializa ao carregar
+atualizarInterface();
