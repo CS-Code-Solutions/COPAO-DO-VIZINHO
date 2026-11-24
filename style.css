@@ -20,7 +20,7 @@ body {
   background: radial-gradient(circle at top, #290b0b 0%, var(--bg-dark) 60%);
   color: var(--text-light);
   min-height: 100vh;
-  padding-bottom: 100px;
+  padding-bottom: 110px;
 }
 
 .container {
@@ -29,12 +29,38 @@ body {
   padding: 0 16px;
 }
 
-/* Header */
+/* Cabeçalho e Logo */
 .topbar {
-  text-align: center;
-  padding: 28px 16px 20px;
+  padding: 24px 16px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   margin-bottom: 28px;
+}
+
+.topbar-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.site-logo {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px;
+  border: 2px solid var(--accent-yellow);
+  box-shadow: 0 0 18px rgba(255, 203, 5, 0.25);
 }
 
 .brand-badge {
@@ -42,17 +68,17 @@ body {
   background: rgba(255, 203, 5, 0.15);
   color: var(--accent-yellow);
   border: 1px solid rgba(255, 203, 5, 0.4);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: 999px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .topbar h1 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
-  font-size: 2rem;
+  font-size: 1.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -63,8 +89,7 @@ body {
 
 .subtitle {
   color: var(--text-muted);
-  font-size: 0.92rem;
-  margin-top: 4px;
+  font-size: 0.9rem;
 }
 
 /* Grid de Produtos */
@@ -95,7 +120,7 @@ body {
   width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  background: #000;
+  background: #090606;
 }
 
 .card-image-wrapper img {
@@ -114,7 +139,7 @@ body {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: rgba(15, 10, 10, 0.85);
+  background: rgba(15, 10, 10, 0.88);
   border: 1px solid var(--accent-yellow);
   color: var(--accent-yellow);
   font-size: 0.72rem;
@@ -133,14 +158,14 @@ body {
 
 .card-body h2 {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.28rem;
   font-weight: 800;
   margin-bottom: 6px;
 }
 
 .desc {
   color: var(--text-muted);
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   line-height: 1.4;
   margin-bottom: 14px;
 }
@@ -231,7 +256,7 @@ body {
 
 .price {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.35rem;
+  font-size: 1.32rem;
   font-weight: 900;
   color: var(--accent-yellow);
 }
@@ -279,6 +304,12 @@ body {
   z-index: 900;
 }
 
+.cart-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .floating-cart-btn #cart-count {
   background: #140c0c;
   color: var(--accent-yellow);
@@ -287,7 +318,7 @@ body {
   font-size: 0.85rem;
 }
 
-/* Modal Flutuante */
+/* Modal / Card Flutuante */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -363,7 +394,7 @@ body {
 }
 
 .cart-item-info h4 {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 600;
 }
 
