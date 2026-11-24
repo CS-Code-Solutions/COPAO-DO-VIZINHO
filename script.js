@@ -1,7 +1,7 @@
-// CONFIGURAÇÃO: Coloque aqui o WhatsApp do Copão do Vizinho (com DDI 55 + DDD)
+// CONFIGURAÇÃO: Insira o número do WhatsApp com DDI 55 + DDD + número
 const WHATSAPP_LOJA = "5551999999999";
 
-// Preço padrão da Caipirinha com Picolé (ajuste conforme o valor cobrado)
+// Valor da Caipirinha com Picolé (ajuste se necessário)
 const PRECO_CAIPIRINHA = 22.00;
 
 let carrinho = JSON.parse(localStorage.getItem("copao_vizinho_cart")) || [];
@@ -91,9 +91,9 @@ function atualizarInterface() {
           <span>${formatarMoeda(item.preco * item.qtd)}</span>
         </div>
         <div class="qty-controls">
-          <button onclick="alterarQuantidade(${index}, -1)">-</button>
+          <button type="button" onclick="alterarQuantidade(${index}, -1)">-</button>
           <span>${item.qtd}</span>
-          <button onclick="alterarQuantidade(${index}, 1)">+</button>
+          <button type="button" onclick="alterarQuantidade(${index}, 1)">+</button>
         </div>
       </div>
     `
@@ -125,7 +125,7 @@ function enviarWhatsApp() {
   const pagamento = document.getElementById("forma-pagamento").value;
 
   if (!nome) {
-    alert("Por favor, informe seu nome para o pedido.");
+    alert("Por favor, informe seu nome para enviar o pedido.");
     return;
   }
 
@@ -156,5 +156,5 @@ function enviarWhatsApp() {
   window.open(url, "_blank");
 }
 
-// Inicializa ao carregar
+document.getElementById("caipi-price-display").textContent = formatarMoeda(PRECO_CAIPIRINHA);
 atualizarInterface();
