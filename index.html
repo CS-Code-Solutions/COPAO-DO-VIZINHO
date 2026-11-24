@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Copão do Vizinho | Cardápio Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header class="topbar">
+    <div class="container topbar-content">
+      <div class="brand">
+        <span class="brand-badge">🍹 DELIVERY & RETIRADA</span>
+        <h1>Copão do <span>Vizinho</span></h1>
+      </div>
+      <p class="subtitle">Escolha seu drink favorito e peça direto no WhatsApp</p>
+    </div>
+  </header>
+
+  <!-- Vitrine de Produtos -->
+  <main class="container">
+    <section class="products-grid">
+
+      <!-- Produto 1: Capeta -->
+      <article class="product-card" data-product="capeta">
+        <div class="card-image-wrapper">
+          <img src="assets/capeta.jpg" alt="Copão Capeta - Morango, Leite Condensado e Vodka" loading="lazy" />
+          <span class="tag-destaque">🔥 MAIS PEDIDO</span>
+        </div>
+        <div class="card-body">
+          <h2>Capeta</h2>
+          <p class="desc">Morango, leite condensado e vodka batidos no ponto certo.</p>
+          <div class="price-row">
+            <span class="price">R$ 19,90</span>
+            <button class="btn-add" onclick="adicionarDireto('Capeta (Morango + Leite Condensado + Vodka)', 19.90)">
+              + Adicionar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Produto 2: Caipirinha com Picolé -->
+      <article class="product-card" data-product="caipirinha">
+        <div class="card-image-wrapper">
+          <img src="assets/caipirinha.jpg" alt="Caipirinha com Picolé - Limão, Morango ou Abacaxi" loading="lazy" />
+          <span class="tag-destaque">🍧 COM PICOLÉ</span>
+        </div>
+        <div class="card-body">
+          <h2>Caipirinha com Picolé</h2>
+          <p class="desc">Monte do seu jeito escolhendo a fruta e o destilado.</p>
+
+          <div class="selectors">
+            <label>
+              Sabor da Fruta / Picolé:
+              <select id="caipi-sabor">
+                <option value="Limão">🍋 Limão</option>
+                <option value="Morango">🍓 Morango</option>
+                <option value="Abacaxi">🍍 Abacaxi</option>
+              </select>
+            </label>
+
+            <label>
+              Destilado:
+              <select id="caipi-destilado">
+                <option value="Smirnoff (Vodka)">Vodka Smirnoff</option>
+                <option value="Tanqueray (Gin)">Gin Tanqueray</option>
+                <option value="Velho Barreiro Gold (Cachaça)">Cachaça Velho Barreiro Gold</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="price-row">
+            <!-- Ajuste o valor da Caipirinha aqui caso seja diferente de R$ 22,00 -->
+            <span class="price">R$ 22,00</span>
+            <button class="btn-add" onclick="adicionarCaipirinha()">
+              + Adicionar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Produto 3: Red Label + Energético -->
+      <article class="product-card" data-product="red-label">
+        <div class="card-image-wrapper">
+          <img src="assets/red-label.jpg" alt="Copão Red Label com Energético 550ml e 750ml" loading="lazy" />
+          <span class="tag-destaque">🥃 COMBO WHISKY</span>
+        </div>
+        <div class="card-body">
+          <h2>Red Label + Energético</h2>
+          <p class="desc">Johnnie Walker Red Label com gelo e energético bem gelado.</p>
+
+          <div class="size-options">
+            <button type="button" class="size-btn active" data-size="550 ml" data-price="19.90" onclick="selecionarTamanho(this)">
+              Copo 550 ml <strong>R$ 19,90</strong>
+            </button>
+            <button type="button" class="size-btn" data-size="750 ml" data-price="24.90" onclick="selecionarTamanho(this)">
+              Copo 750 ml <strong>R$ 24,90</strong>
+            </button>
+          </div>
+
+          <div class="price-row">
+            <span class="price" id="red-price-display">R$ 19,90</span>
+            <button class="btn-add" onclick="adicionarRedLabel()">
+              + Adicionar
+            </button>
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- Botão Flutuante do Carrinho -->
+  <button id="floating-cart-btn" class="floating-cart-btn hidden" onclick="toggleCartModal()">
+    <span class="cart-icon">🛒</span>
+    <span id="cart-count">0</span>
+    <span class="cart-label">Ver Pedido</span>
+    <span id="cart-floating-total">R$ 0,00</span>
+  </button>
+
+  <!-- Modal / Card Flutuante do Pedido -->
+  <div id="cart-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>🛒 Seu Pedido</h3>
+        <button class="close-btn" onclick="toggleCartModal()">✕</button>
+      </div>
+
+      <div id="cart-items" class="cart-items">
+        <!-- Itens inseridos via JS -->
+      </div>
+
+      <div class="checkout-fields">
+        <input type="text" id="cliente-nome" placeholder="Seu nome" required />
+        <select id="tipo-entrega" onchange="toggleEndereco()">
+          <option value="Retirada no Local">🏃 Retirada no Local</option>
+          <option value="Entrega (Delivery)">🛵 Entrega (Delivery)</option>
+        </select>
+        <input type="text" id="cliente-endereco" class="hidden" placeholder="Rua, número e complemento" />
+        <select id="forma-pagamento">
+          <option value="Pix">💠 Pagamento via Pix</option>
+          <option value="Cartão na entrega/retirada">💳 Cartão</option>
+          <option value="Dinheiro">💵 Dinheiro</option>
+        </select>
+      </div>
+
+      <div class="modal-footer">
+        <div class="total-line">
+          <span>Total do Pedido:</span>
+          <strong id="modal-total">R$ 0,00</strong>
+        </div>
+        <button class="btn-whatsapp" onclick="enviarWhatsApp()">
+          📲 Finalizar no WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé -->
+  <footer class="footer">
+    <p>
+      Powered by
+      <a href="https://www.instagram.com/cs_code_solutions?exln=Ym1mNDMzYTYxa3d6" target="_blank" rel="noopener noreferrer">
+        CS Code Solutions
+      </a>
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
