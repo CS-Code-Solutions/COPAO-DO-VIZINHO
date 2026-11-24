@@ -4,6 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Copão do Vizinho | Cardápio Digital</title>
+
+  <!-- Meta Tags Open Graph (Para WhatsApp e Redes Sociais) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Copão do Vizinho">
+  <meta property="og:title" content="Copão do Vizinho - Peça seu Drink Favorito! 🍹">
+  <meta property="og:description" content="Escolha seu drink no nosso cardápio digital, monte seu pedido e finalize no WhatsApp. Rapidez e sabor na sua porta!">
+  <!-- URL da página principal (mude para o seu link real do GitHub Pages) -->
+  <meta property="og:url" content="https://cs-code-solutions.github.io/CS-Code-Solutions/">
+  <!-- URL da imagem de visualização (deve ser um JPG 1200x630 com fundo sólido, na raiz) -->
+  <meta property="og:image" content="https://cs-code-solutions.github.io/CS-Code-Solutions/whatsapp.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
   <link rel="icon" type="image/png" href="ico.png" />
   <link rel="shortcut icon" type="image/png" href="ico.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,12 +26,10 @@
 </head>
 <body>
 
-  <!-- Cabeçalho com Logo grande e efeito LED -->
+  <!-- Cabeçalho com Logo Grande e Centralizado -->
   <header class="topbar">
     <div class="container topbar-content">
-      <div class="logo-led-wrapper" tabindex="0">
-        <img src="logo.png" alt="Logo Copão do Vizinho" class="site-logo" draggable="false" />
-      </div>
+      <img src="logo.png" alt="Logo Copão do Vizinho" class="site-logo" />
       <p class="subtitle">Escolha seu drink favorito, monte o pedido no carrinho e finalize no WhatsApp</p>
     </div>
   </header>
@@ -29,15 +41,15 @@
       <!-- Card 1: Capeta -->
       <article class="product-card" data-product="capeta">
         <div class="card-image-wrapper">
-          <img src="morango.jpg" alt="Copão Capeta - Morango, Leite Condensado e Vodka" draggable="false" loading="lazy" />
+          <img src="morango.jpg" alt="Copão Capeta - Morango, Leite Condensado e Vodka" class="img-morango" loading="lazy" />
           <span class="tag-destaque">🔥 MAIS PEDIDO</span>
 
-          <!-- Adesivo Flutuante no canto superior direito -->
+          <!-- Adesivo Flutuante estilo "Hoje tem Capeta" -->
           <div class="sticker-overlay sticker-capeta" aria-hidden="true">
             <svg viewBox="0 0 260 140" class="sticker-svg">
               <defs>
                 <filter id="stickerShadow1" x="-15%" y="-15%" width="130%" height="130%">
-                  <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.8"/>
+                  <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.75"/>
                 </filter>
               </defs>
               <g filter="url(#stickerShadow1)">
@@ -70,10 +82,10 @@
       <!-- Card 2: Caipirinha com Picolé -->
       <article class="product-card" data-product="caipirinha">
         <div class="card-image-wrapper">
-          <img src="picole.jpg" alt="Caipirinha com Picolé - Limão, Morango ou Abacaxi" draggable="false" loading="lazy" />
+          <img src="picole.jpg" alt="Caipirinha com Picolé - Limão, Morango ou Abacaxi" class="img-picole" loading="lazy" />
           <span class="tag-destaque">🍧 COM PICOLÉ</span>
 
-          <!-- Adesivo Flutuante no canto superior direito -->
+          <!-- Adesivo Flutuante ajustado na frente do copo do meio -->
           <div class="sticker-overlay sticker-caipi" aria-hidden="true">
             <div class="sticker-caipi-box">
               <span class="sticker-caipi-title">Caipirinha</span>
@@ -118,10 +130,10 @@
       <!-- Card 3: Red Label + Energético -->
       <article class="product-card" data-product="red-label">
         <div class="card-image-wrapper">
-          <img src="redlabel.png" alt="Copão Red Label com Energético 550ml e 750ml" draggable="false" loading="lazy" />
+          <img src="redlabel.jpg" alt="Copão Red Label com Energético 550ml e 750ml" class="img-redlabel" loading="lazy" />
           <span class="tag-destaque">🥃 COMBO WHISKY</span>
 
-          <!-- Selo Flutuante no canto superior direito -->
+          <!-- Selo discreto na parte inferior direita sem bloquear os copos -->
           <div class="sticker-overlay sticker-red" aria-hidden="true">
             <div class="sticker-red-box">
               <span class="sticker-red-top">550ml • 750ml</span>
@@ -204,7 +216,7 @@
   <footer class="footer">
     <p>
       Powered by
-      <a href="https://cs-code-solutions.github.io/CS-Code-Solutions/" target="_blank" rel="noopener noreferrer" draggable="false">
+      <a href="https://cs-code-solutions.github.io/CS-Code-Solutions/" target="_blank" rel="noopener noreferrer">
         CS Code Solutions
       </a>
     </p>
