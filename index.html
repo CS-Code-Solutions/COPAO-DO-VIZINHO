@@ -43,7 +43,7 @@
   <main class="container">
     <section class="products-grid">
 
-      <!-- Card 1: Capeta -->
+      <!-- Card 1: Capeta (Original) -->
       <article class="product-card" data-product="capeta">
         <div class="card-image-wrapper">
           <img src="morango.jpg" alt="Copão Capeta - Morango, Leite Condensado e Vodka" draggable="false" loading="lazy" />
@@ -84,29 +84,54 @@
         </div>
       </article>
 
-      <!-- Card 2: Caipirinha com Picolé -->
-      <article class="product-card" data-product="caipirinha">
+      <!-- Card 2: Drinks com Energético (NOVO) -->
+      <article class="product-card" data-product="drink-energetico">
         <div class="card-image-wrapper">
-          <img src="picole.jpg" alt="Caipirinha com Picolé - Limão, Morango ou Abacaxi" draggable="false" loading="lazy" />
-          <span class="tag-destaque">🍧 COM PICOLÉ</span>
-
-          <!-- Adesivo Flutuante no canto superior direito -->
-          <div class="sticker-overlay sticker-caipi" aria-hidden="true">
-            <div class="sticker-caipi-box">
-              <span class="sticker-caipi-title">Caipirinha</span>
-              <span class="sticker-caipi-badge">COM PICOLÉ 🍧</span>
-            </div>
-          </div>
+          <!-- Usando a imagem limpa de drinks -->
+          <img src="comenergetico.jpg" alt="Drinks com Energético - Vodka ou Gin" draggable="false" loading="lazy" />
+          <span class="tag-destaque">⚡ VODKA OU GIN</span>
         </div>
 
         <div class="card-body">
-          <h2>Caipirinha com Picolé</h2>
-          <p class="desc">Escolha o sabor da fruta/picolé e o destilado do seu copo.</p>
+          <h2>Drinks com Energético</h2>
+          <p class="desc">Escolha sua bebida favorita e o energético gelado.</p>
 
           <div class="selectors">
             <label>
-              Sabor da Fruta / Picolé:
-              <select id="caipi-sabor">
+              Bebida Base:
+              <select id="drink-base">
+                <option value="Vodka Smirnoff">Vodka Smirnoff</option>
+                <option value="Gin Tanqueray">Gin Tanqueray</option>
+                <option value="Whisky Red Label">Whisky Red Label</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="price-row">
+            <span class="price" id="drink-price-display">R$ 18,00</span>
+            <button type="button" class="btn-add" onclick="adicionarDrinkEnergetico()">
+              + Adicionar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: Caipirinhas (NOVO) -->
+      <article class="product-card" data-product="caipirinha-nova">
+        <div class="card-image-wrapper">
+          <!-- Usando a imagem limpa de caipirinhas -->
+          <img src="caipirinhas.jpg" alt="Caipirinhas - Limão, Morango, Abacaxi" draggable="false" loading="lazy" />
+          <span class="tag-destaque">🍋 MORANGO • ABACAXI</span>
+        </div>
+
+        <div class="card-body">
+          <h2>Caipirinha da Casa</h2>
+          <p class="desc">Clássica, feita com a fruta fresca na hora.</p>
+
+          <div class="selectors">
+            <label>
+              Sabor da Fruta:
+              <select id="caipi-nova-sabor">
                 <option value="Limão">🍋 Limão</option>
                 <option value="Morango">🍓 Morango</option>
                 <option value="Abacaxi">🍍 Abacaxi</option>
@@ -115,54 +140,17 @@
 
             <label>
               Destilado:
-              <select id="caipi-destilado">
-                <option value="Smirnoff (Vodka)">Vodka Smirnoff</option>
-                <option value="Tanqueray (Gin)">Gin Tanqueray</option>
-                <option value="Velho Barreiro Gold (Cachaça)">Cachaça Velho Barreiro Gold</option>
+              <select id="caipi-nova-destilado">
+                <option value="Cachaça Velho Barreiro Gold">Cachaça Velho Barreiro Gold</option>
+                <option value="Vodka Smirnoff">Vodka Smirnoff</option>
+                <option value="Gin Tanqueray">Gin Tanqueray</option>
               </select>
             </label>
           </div>
 
           <div class="price-row">
-            <span class="price" id="caipi-price-display">R$ 22,00</span>
-            <button type="button" class="btn-add" onclick="adicionarCaipirinha()">
-              + Adicionar
-            </button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 3: Red Label + Energético -->
-      <article class="product-card" data-product="red-label">
-        <div class="card-image-wrapper">
-          <img src="redlabel.png" alt="Copão Red Label com Energético 550ml e 750ml" draggable="false" loading="lazy" />
-          <span class="tag-destaque">🥃 COMBO WHISKY</span>
-
-          <!-- Selo Flutuante no canto superior direito -->
-          <div class="sticker-overlay sticker-red" aria-hidden="true">
-            <div class="sticker-red-box">
-              <span class="sticker-red-top">550ml • 750ml</span>
-              <span class="sticker-red-sub">Bem Gelado</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-body">
-          <h2>Red Label + Energético</h2>
-          <p class="desc">Johnnie Walker Red Label com gelo e energético bem gelado.</p>
-
-          <div class="size-options">
-            <button type="button" class="size-btn active" data-size="550 ml" data-price="19.90" onclick="selecionarTamanho(this)">
-              Copo 550 ml <strong>R$ 19,90</strong>
-            </button>
-            <button type="button" class="size-btn" data-size="750 ml" data-price="24.90" onclick="selecionarTamanho(this)">
-              Copo 750 ml <strong>R$ 24,90</strong>
-            </button>
-          </div>
-
-          <div class="price-row">
-            <span class="price" id="red-price-display">R$ 19,90</span>
-            <button type="button" class="btn-add" onclick="adicionarRedLabel()">
+            <span class="price" id="caipi-nova-price-display">R$ 20,00</span>
+            <button type="button" class="btn-add" onclick="adicionarCaipirinhaNova()">
               + Adicionar
             </button>
           </div>
