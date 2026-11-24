@@ -1,13 +1,13 @@
 // WhatsApp configurado: 55 + 51 + 99887726
 const WHATSAPP_LOJA = "555199887726";
 
-// Valores configurados dos produtos
+// Valor da Caipirinha com Picolé (ajuste se necessário)
 const PRECO_CAIPIRINHA = 22.00;
-const PRECO_DRINK_ENERGETICO = 18.00;
-const PRECO_CAIPI_NOVA = 20.00;
 
 let carrinho = JSON.parse(localStorage.getItem("copao_vizinho_cart")) || [];
 let redLabelSelecionado = { tamanho: "550 ml", preco: 19.90 };
+let energeticoSelecionado = { tamanho: "550 ml", preco: 16.90 };
+let caipiFrutasSelecionado = { tamanho: "550 ml", preco: 16.90 };
 
 /* ==========================================
    TRAVAS CONTRA CÓPIA DE TEXTO E IMAGENS
@@ -96,26 +96,6 @@ function adicionarCaipirinha() {
   adicionarAoCarrinho(nomeCompleto, PRECO_CAIPIRINHA);
 }
 
-function adicionarDrinkEnergetico() {
-  const baseEl = document.getElementById("drink-base");
-  if (!baseEl) return;
-
-  const base = baseEl.value;
-  const nomeCompleto = `Drink com Energético (${base})`;
-  adicionarAoCarrinho(nomeCompleto, PRECO_DRINK_ENERGETICO);
-}
-
-function adicionarCaipirinhaNova() {
-  const saborEl = document.getElementById("caipi-nova-sabor");
-  const destiladoEl = document.getElementById("caipi-nova-destilado");
-  if (!saborEl || !destiladoEl) return;
-
-  const sabor = saborEl.value;
-  const destilado = destiladoEl.value;
-  const nomeCompleto = `Caipirinha da Casa (${sabor} c/ ${destilado})`;
-  adicionarAoCarrinho(nomeCompleto, PRECO_CAIPI_NOVA);
-}
-
 function selecionarTamanho(botao) {
   document.querySelectorAll(".size-btn").forEach((btn) => btn.classList.remove("active"));
   botao.classList.add("active");
@@ -124,15 +104,54 @@ function selecionarTamanho(botao) {
   const preco = parseFloat(botao.getAttribute("data-price"));
   redLabelSelecionado = { tamanho, preco };
 
-  const redDisplay = document.getElementById("red-price-display");
-  if (redDisplay) {
-    redDisplay.textContent = formatarMoeda(preco);
-  }
+  const display = document.getElementById("red-price-display");
+  if (display) display.textContent = formatarMoeda(preco);
 }
 
 function adicionarRedLabel() {
   const nomeCompleto = `Red Label + Energético (${redLabelSelecionado.tamanho})`;
   adicionarAoCarrinho(nomeCompleto, redLabelSelecionado.preco);
+}
+
+function selecionarTamanhoEnergetico(botao) {
+  document.querySelectorAll(".energetico-size-btn").forEach((btn) => btn.classList.remove("active"));
+  botao.classList.add("active");
+
+  const tamanho = botao.getAttribute("data-size");
+  const preco = parseFloat(botao.getAttribute("data-price"));
+  energeticoSelecionado = { tamanho, preco };
+
+  const display = document.getElementById("energetico-price-display");
+  if (display) display.textContent = formatarMoeda(preco);
+}
+
+function adicionarDrinkEnergetico() {
+  const tipoEl = document.getElementById("drink-energetico-tipo");
+  if (!tipoEl) return;
+
+  const nomeCompleto = `${tipoEl.value} (${energeticoSelecionado.tamanho})`;
+  adicionarAoCarrinho(nomeCompleto, energeticoSelecionado.preco);
+}
+
+function selecionarTamanhoCaipiFrutas(botao) {
+  document.querySelectorAll(".caipi-frutas-size-btn").forEach((btn) => btn.classList.remove("active"));
+  botao.classList.add("active");
+
+  const tamanho = botao.getAttribute("data-size");
+  const preco = parseFloat(botao.getAttribute("data-price"));
+  caipiFrutasSelecionado = { tamanho, preco };
+
+  const display = document.getElementById("caipi-frutas-price-display");
+  if (display) display.textContent = formatarMoeda(preco);
+}
+
+function adicionarCaipirinhas() {
+  const saborEl = document.getElementById("caipi-frutas-sabor");
+  const destiladoEl = document.getElementById("caipi-frutas-destilado");
+  if (!saborEl || !destiladoEl) return;
+
+  const nomeCompleto = `Caipirinha (${saborEl.value} + ${destiladoEl.value} - ${caipiFrutasSelecionado.tamanho})`;
+  adicionarAoCarrinho(nomeCompleto, caipiFrutasSelecionado.preco);
 }
 
 function alterarQuantidade(index, delta) {
@@ -153,9 +172,12 @@ function atualizarInterface() {
   const totalItens = carrinho.reduce((acc, item) => acc + item.qtd, 0);
   const valorTotal = carrinho.reduce((acc, item) => acc + item.preco * item.qtd, 0);
 
+  if (!floatingBtn || !cartCount || !floatingTotal || !modalTotal || !cartItemsContainer) return;
+
   if (totalItens === 0) {
     floatingBtn.classList.add("hidden");
-    document.getElementById("cart-modal").classList.add("hidden");
+    const modal = document.getElementById("cart-modal");
+    if (modal) modal.classList.add("hidden");
     return;
   }
 
@@ -185,7 +207,7 @@ function atualizarInterface() {
 
 function toggleCartModal() {
   const modal = document.getElementById("cart-modal");
-  modal.classList.toggle("hidden");
+  if (modal) modal.classList.toggle("hidden");
 }
 
 function enviarWhatsApp() {
@@ -226,14 +248,7 @@ function enviarWhatsApp() {
   window.open(url, "_blank");
 }
 
-// Sincronização inicial de preços exibidos na tela
 const caipiDisplay = document.getElementById("caipi-price-display");
 if (caipiDisplay) caipiDisplay.textContent = formatarMoeda(PRECO_CAIPIRINHA);
-
-const drinkDisplay = document.getElementById("drink-price-display");
-if (drinkDisplay) drinkDisplay.textContent = formatarMoeda(PRECO_DRINK_ENERGETICO);
-
-const caipiNovaDisplay = document.getElementById("caipi-nova-price-display");
-if (caipiNovaDisplay) caipiNovaDisplay.textContent = formatarMoeda(PRECO_CAIPI_NOVA);
 
 atualizarInterface();
