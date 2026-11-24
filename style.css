@@ -29,7 +29,7 @@ body {
   padding: 0 16px;
 }
 
-/* Cabeçalho com Logo grande e centralizado */
+/* Cabeçalho com Logo grande e efeito LED ao passar o mouse/dedo */
 .topbar {
   padding: 24px 16px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -45,14 +45,36 @@ body {
   gap: 10px;
 }
 
+.logo-led-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.3s ease;
+}
+
 .site-logo {
-  height: 128px;
+  height: 168px;
   width: auto;
-  max-width: 240px;
+  max-width: 310px;
   object-fit: contain;
   display: block;
   margin: 0 auto;
-  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.65));
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.75));
+  transition: transform 0.3s ease, filter 0.35s ease;
+}
+
+.logo-led-wrapper:hover .site-logo,
+.logo-led-wrapper:active .site-logo,
+.logo-led-wrapper:focus .site-logo {
+  transform: scale(1.05);
+  filter:
+    drop-shadow(0 0 8px rgba(255, 30, 39, 0.95))
+    drop-shadow(0 0 18px rgba(255, 203, 5, 0.85))
+    drop-shadow(0 0 32px rgba(255, 30, 39, 0.75));
 }
 
 .subtitle {
@@ -84,34 +106,22 @@ body {
   box-shadow: 0 14px 32px rgba(229, 28, 35, 0.28);
 }
 
+/* Enquadramento quadrado sem cortar nenhuma arte */
 .card-image-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
-  background: #090606;
+  background: radial-gradient(circle at center, #1e0b0b 0%, #090505 100%);
 }
 
 .card-image-wrapper img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   display: block;
   transition: transform 0.3s ease;
-}
-
-/* Enquadramento específico das artes para não cortar o produto */
-.img-morango {
-  object-position: center 45%;
-}
-
-.img-picole {
-  object-position: center 68%;
-}
-
-.img-redlabel {
-  object-position: center 74%;
 }
 
 .product-card:hover .card-image-wrapper img {
@@ -122,7 +132,7 @@ body {
   position: absolute;
   top: 10px;
   left: 10px;
-  background: rgba(15, 10, 10, 0.88);
+  background: rgba(15, 10, 10, 0.9);
   border: 1px solid var(--accent-yellow);
   color: var(--accent-yellow);
   font-size: 0.7rem;
@@ -134,31 +144,29 @@ body {
 }
 
 /* ==========================================
-   ADESIVOS FLUTUANTES AJUSTADOS
+   ADESIVOS FLUTUANTES NO CANTO SUPERIOR DIREITO
    ========================================== */
-@keyframes floatSticker {
+@keyframes floatCorner {
   0%, 100% {
-    transform: translate(-50%, -50%) rotate(-5deg) translateY(0px);
+    transform: rotate(4deg) translateY(0px);
   }
   50% {
-    transform: translate(-50%, -50%) rotate(-3deg) translateY(-4px);
+    transform: rotate(6deg) translateY(-4px);
   }
 }
 
 .sticker-overlay {
   position: absolute;
+  top: 10px;
+  right: 10px;
   pointer-events: none;
-  z-index: 2;
+  z-index: 3;
+  animation: floatCorner 3.2s ease-in-out infinite;
 }
 
-/* 1. Sticker Capeta na frente do copo */
+/* 1. Sticker Capeta no canto superior direito */
 .sticker-capeta {
-  left: 50%;
-  top: 58%;
-  transform: translate(-50%, -50%) rotate(-5deg);
-  width: 62%;
-  max-width: 200px;
-  animation: floatSticker 3.2s ease-in-out infinite;
+  width: 122px;
 }
 
 .sticker-svg {
@@ -167,32 +175,25 @@ body {
   display: block;
 }
 
-/* 2. Sticker Caipirinha mais abaixo para não cobrir o picolé */
-.sticker-caipi {
-  left: 50%;
-  top: 72%;
-  transform: translate(-50%, -50%) rotate(-4deg);
-  animation: floatSticker 3.5s ease-in-out infinite;
-}
-
+/* 2. Sticker Caipirinha no canto superior direito */
 .sticker-caipi-box {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  background: rgba(18, 10, 10, 0.85);
+  border: 1.5px solid var(--accent-yellow);
+  border-radius: 10px;
+  padding: 4px 9px;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.85);
 }
 
 .sticker-caipi-title {
   font-family: 'Pacifico', cursive;
-  font-size: 1.45rem;
+  font-size: 1.05rem;
   color: #ffffff;
-  line-height: 1;
-  text-shadow:
-    -2px -2px 0 #140a0a,
-     2px -2px 0 #140a0a,
-    -2px  2px 0 #140a0a,
-     2px  2px 0 #140a0a,
-     0   4px 10px rgba(0, 0, 0, 0.85);
+  line-height: 1.05;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
 }
 
 .sticker-caipi-badge {
@@ -201,38 +202,28 @@ body {
   color: #1a0b0b;
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
-  font-size: 0.64rem;
+  font-size: 0.56rem;
   letter-spacing: 0.4px;
-  padding: 2px 8px;
-  border-radius: 6px;
-  border: 2px solid #140a0a;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  padding: 2px 6px;
+  border-radius: 5px;
   white-space: nowrap;
 }
 
-/* 3. Selo Red Label no canto inferior direito sem bloquear a arte */
-.sticker-red {
-  left: auto;
-  right: 10px;
-  bottom: 10px;
-  top: auto;
-  transform: rotate(-3deg);
-}
-
+/* 3. Selo Red Label no canto superior direito */
 .sticker-red-box {
   background: rgba(18, 10, 10, 0.9);
   border: 1.5px solid var(--accent-yellow);
   border-radius: 8px;
   padding: 4px 9px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.85);
 }
 
 .sticker-red-top {
   display: block;
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--accent-yellow);
   line-height: 1.1;
 }
@@ -241,7 +232,7 @@ body {
   display: block;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
-  font-size: 0.66rem;
+  font-size: 0.64rem;
   color: #ffffff;
   line-height: 1.15;
 }
