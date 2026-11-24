@@ -7,6 +7,59 @@ const PRECO_CAIPIRINHA = 22.00;
 let carrinho = JSON.parse(localStorage.getItem("copao_vizinho_cart")) || [];
 let redLabelSelecionado = { tamanho: "550 ml", preco: 19.90 };
 
+/* ==========================================
+   TRAVAS CONTRA CÓPIA DE TEXTO E IMAGENS
+   ========================================== */
+function isEditableElement(el) {
+  if (!el) return false;
+  const tag = el.tagName ? el.tagName.toLowerCase() : "";
+  return tag === "input" || tag === "textarea" || tag === "select" || el.isContentEditable;
+}
+
+document.addEventListener("contextmenu", (e) => {
+  if (!isEditableElement(e.target)) {
+    e.preventDefault();
+  }
+});
+
+document.addEventListener("dragstart", (e) => {
+  if (e.target && e.target.tagName && e.target.tagName.toLowerCase() === "img") {
+    e.preventDefault();
+  }
+});
+
+document.addEventListener("selectstart", (e) => {
+  if (!isEditableElement(e.target)) {
+    e.preventDefault();
+  }
+});
+
+document.addEventListener("copy", (e) => {
+  if (!isEditableElement(document.activeElement)) {
+    e.preventDefault();
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  const key = e.key.toLowerCase();
+  const ctrlOrCmd = e.ctrlKey || e.metaKey;
+
+  if (isEditableElement(document.activeElement) && ctrlOrCmd && key === "c") {
+    return;
+  }
+
+  if (
+    e.key === "F12" ||
+    (ctrlOrCmd && ["c", "u", "s", "a", "p"].includes(key)) ||
+    (ctrlOrCmd && e.shiftKey && ["i", "j", "c"].includes(key))
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* ==========================================
+   LÓGICA DO CARRINHO E PEDIDO WHATSAPP
+   ========================================== */
 function formatarMoeda(valor) {
   return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
