@@ -197,12 +197,19 @@ body {
   font-family: inherit;
   font-size: 0.88rem;
   outline: none;
+  width: 100%;
 }
 
 .selectors select:focus,
 .checkout-fields input:focus,
 .checkout-fields select:focus {
   border-color: var(--accent-yellow);
+}
+
+.unit-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
 /* Tamanhos Red Label */
@@ -318,7 +325,7 @@ body {
   font-size: 0.85rem;
 }
 
-/* Modal / Card Flutuante */
+/* Card / Modal Flutuante */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -380,7 +387,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: 240px;
+  max-height: 220px;
 }
 
 .cart-item {
