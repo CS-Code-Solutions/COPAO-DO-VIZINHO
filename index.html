@@ -12,10 +12,12 @@
 </head>
 <body>
 
-  <!-- Cabeçalho com Logo grande e centralizado -->
+  <!-- Cabeçalho com Logo grande e efeito LED -->
   <header class="topbar">
     <div class="container topbar-content">
-      <img src="logo.png" alt="Logo Copão do Vizinho" class="site-logo" />
+      <div class="logo-led-wrapper" tabindex="0">
+        <img src="logo.png" alt="Logo Copão do Vizinho" class="site-logo" />
+      </div>
       <p class="subtitle">Escolha seu drink favorito, monte o pedido no carrinho e finalize no WhatsApp</p>
     </div>
   </header>
@@ -27,15 +29,15 @@
       <!-- Card 1: Capeta -->
       <article class="product-card" data-product="capeta">
         <div class="card-image-wrapper">
-          <img src="morango.jpg" alt="Copão Capeta - Morango, Leite Condensado e Vodka" class="img-morango" loading="lazy" />
+          <img src="morango.jpg" alt="Copão Capeta - Morango, Leite Condensado e Vodka" loading="lazy" />
           <span class="tag-destaque">🔥 MAIS PEDIDO</span>
 
-          <!-- Adesivo Flutuante estilo "Hoje tem Capeta" -->
+          <!-- Adesivo Flutuante no canto superior direito -->
           <div class="sticker-overlay sticker-capeta" aria-hidden="true">
             <svg viewBox="0 0 260 140" class="sticker-svg">
               <defs>
                 <filter id="stickerShadow1" x="-15%" y="-15%" width="130%" height="130%">
-                  <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.75"/>
+                  <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.8"/>
                 </filter>
               </defs>
               <g filter="url(#stickerShadow1)">
@@ -68,10 +70,10 @@
       <!-- Card 2: Caipirinha com Picolé -->
       <article class="product-card" data-product="caipirinha">
         <div class="card-image-wrapper">
-          <img src="picole.jpg" alt="Caipirinha com Picolé - Limão, Morango ou Abacaxi" class="img-picole" loading="lazy" />
+          <img src="picole.jpg" alt="Caipirinha com Picolé - Limão, Morango ou Abacaxi" loading="lazy" />
           <span class="tag-destaque">🍧 COM PICOLÉ</span>
 
-          <!-- Adesivo Flutuante ajustado na frente do copo do meio -->
+          <!-- Adesivo Flutuante no canto superior direito -->
           <div class="sticker-overlay sticker-caipi" aria-hidden="true">
             <div class="sticker-caipi-box">
               <span class="sticker-caipi-title">Caipirinha</span>
@@ -116,10 +118,10 @@
       <!-- Card 3: Red Label + Energético -->
       <article class="product-card" data-product="red-label">
         <div class="card-image-wrapper">
-          <img src="redlabel.jpg" alt="Copão Red Label com Energético 550ml e 750ml" class="img-redlabel" loading="lazy" />
+          <img src="redlabel.jpg" alt="Copão Red Label com Energético 550ml e 750ml" loading="lazy" />
           <span class="tag-destaque">🥃 COMBO WHISKY</span>
 
-          <!-- Selo discreto na parte inferior direita sem bloquear os copos -->
+          <!-- Selo Flutuante no canto superior direito -->
           <div class="sticker-overlay sticker-red" aria-hidden="true">
             <div class="sticker-red-box">
               <span class="sticker-red-top">550ml • 750ml</span>
