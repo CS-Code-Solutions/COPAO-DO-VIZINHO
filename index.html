@@ -18,7 +18,7 @@
       <div class="brand">
         <img src="logo.png" alt="Logo Copão do Vizinho" class="site-logo" />
         <div>
-          <span class="brand-badge">🍹 DELIVERY & RETIRADA</span>
+          <span class="brand-badge">🍹 PEDIDOS VIZINHOS</span>
           <h1>Copão do <span>Vizinho</span></h1>
         </div>
       </div>
@@ -128,7 +128,7 @@
     <span id="cart-floating-total">R$ 0,00</span>
   </button>
 
-  <!-- Card / Modal Flutuante do Carrinho -->
+  <!-- Card / Modal Flutuante do Pedido -->
   <div id="cart-modal" class="modal-backdrop hidden">
     <div class="modal-card">
       <div class="modal-header">
@@ -139,16 +139,15 @@
       <div id="cart-items" class="cart-items"></div>
 
       <div class="checkout-fields">
-        <input type="text" id="cliente-nome" placeholder="Seu nome" />
-        <select id="tipo-entrega" onchange="toggleEndereco()">
-          <option value="Retirada no Local">🏃 Retirada no Local</option>
-          <option value="Entrega (Delivery)">🛵 Entrega (Delivery)</option>
-        </select>
-        <input type="text" id="cliente-endereco" class="hidden" placeholder="Rua, número, bairro e complemento" />
+        <input type="text" id="cliente-nome" placeholder="Nome" />
+        <div class="unit-row">
+          <input type="text" id="cliente-apartamento" placeholder="Apartamento" />
+          <input type="text" id="cliente-torre" placeholder="Torre" />
+        </div>
         <select id="forma-pagamento">
-          <option value="Pix">💠 Pagamento via Pix</option>
-          <option value="Cartão">💳 Cartão</option>
-          <option value="Dinheiro">💵 Dinheiro</option>
+          <option value="Pix">💠 Forma de pagamento: Pix</option>
+          <option value="Cartão">💳 Forma de pagamento: Cartão</option>
+          <option value="Dinheiro">💵 Forma de pagamento: Dinheiro</option>
         </select>
       </div>
 
